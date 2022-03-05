@@ -1,0 +1,22 @@
+{
+  "name": "typescript-playground",
+  "version": "1.0.0",
+  "description": "The following repository contains code for exploring Typescript which I have created during a Udemy course, namely",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pgrepds/typescript-playground.git"
+  },
+  "author": "David Scholz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pgrepds/typescript-playground/issues"
+  },
+  "homepage": "https://github.com/pgrepds/typescript-playground#readme",
+  "dependencies": {
+    "axios": "^0.26.0"
+  }
+}
