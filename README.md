@@ -30,7 +30,7 @@ Typescript Compiler
 
 Plain old Javascript
 
-**Summary:** 
+**Summary:**
 
 - Writing Typescript is the same as writing Javascript with some extra documentation
 - Typescript has no effect on how our code gets executed by the browser or Node
@@ -99,3 +99,37 @@ Since we have also installed `node-ts`, we can execute both commands at once usi
 ```bash
 npx ts-node index.ts
 ```
+
+#### Basic Type Definitions in Typescript
+
+Informally, a type is an easy way to refer to the different properties and functions that a value has. In that sense,
+a value is anything that can be assigned to a variable.
+
+Example: "red". First, this is a string. Second, it is a value that has all the properties and methods that we assume that a string has. This includes functions like `charAt`, `concat`, and so on. We use types as a shortcut to describe what methods and properties a value, in this case "red", has.
+
+We have, generally speaking, two different categories of types.
+
+- **Primitive Types:** number, boolean, void, undefined, string, symbol, null
+- **Object Types:** functions, arrays, classes, objects
+
+There are two good reasons to use types. Types are used by the Typescript Compiler to analyze our code for errors. Types allow other engineers to understand what values are flowing around our codebase.
+
+#### Type Annotations and Type Inference
+
+A type annotation is a piece of code that we add to tell Typescript what type of value a variable will refer to. Type inference is the process of Typescript trying to figure out what type of value a variable refers to. In other words, with type annotations the developer tells Typescript the type of a value while type inference leaves this process completely to Typescript (Typescript 'guesses' the type of the variable).
+
+If we declare and initialize a variable on the same line, Typescript will figure out the type for us. Here is an example.
+
+```javascript
+const color = 'red';
+```
+
+The code on the left-hand-site of the equal sign is called `variable declaration`. The code on the right-hand-site is called `variable initialization`. However, if we move the variable assignment to a new line, then this will not work (Typescript will assign the type `any` in this case).
+
+There are scenarios where we cannot rely on type inference. In general, there are three different scenarios which are as follows.
+
+- When a functions returns the `any` type, we need to clarify the value
+- When we declare a variable on one line then initialize it later
+- When we want a variable to have a type that can not be inferred
+
+On the type `any`: the type `any` is a type just as `string` or `boolean`. It means that Typescript has no idea what the type of the variable is. It can not check for correct property references. We should avoid variables with the `any` type at all costs.
