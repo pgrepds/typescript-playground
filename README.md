@@ -133,3 +133,100 @@ There are scenarios where we cannot rely on type inference. In general, there ar
 - When we want a variable to have a type that can not be inferred
 
 On the type `any`: the type `any` is a type just as `string` or `boolean`. It means that Typescript has no idea what the type of the variable is. It can not check for correct property references. We should avoid variables with the `any` type at all costs.
+
+#### Inference around functions
+
+```javascript
+const mult = (a: number, b: number): number => {
+    return a * b;
+};
+```
+
+We add annotations for the input parameters and for the return type of the functions. In the above example, the function `mult` receives two parameters of type `number` and returns a value of type `number`.
+
+The return type can be determined by typescript using type inference.
+
+```javascript
+const mult = (a: number, b: number) => {
+    return a * b;
+};
+```
+
+However, typescript can not know what we actually want to return. Hence, the following is totally valid, but might not be the intended code.
+
+```javascript
+const mult = (a: number, b: number) => {
+    a * b;
+};
+```
+
+If we hove over the function definition, it will tell us that we are returning `void`. However, there is of course no error. In that sense, it is better to explicitly add the return type to prevent this kind of bugs.
+
+#### The type void and never
+
+```javascript
+const logger = (message: string): void => {
+    console.log(message);
+};
+```
+
+We use the type `void` to annotate a function that return nothing. Technically, a function that returns void can return null or undefined. Thus the following is totally valid.
+
+```javascript
+const logger = (message: string): void => {
+    console.log(message);
+    return null
+};
+```
+
+```javascript
+const logger = (message: string): void => {
+    console.log(message);
+    return undefined
+};
+```
+
+Consider the following function.
+
+```javascript
+const throwError = (message: string): never => {
+    if (!message) {
+        throw new Error(message)
+    }
+}
+```
+
+We use the return type `never` to annotate the fact that the function will in fact never return the end. For the above example, this is not totally true, since `message` could not be undefined. Thus, using `void` is valid here as well.
+
+#### Typed Arrays
+
+There are a couple of reasons why typing arrays is important.
+
+- TS can infer the type when we extract values from the array.
+- TS can prevent us from adding values of a different type to the array
+- Array functions like map, forEach or reduce will infer the correct type as well.
+- We can still allow multiple types inside an array using the or syntax.
+
+#### Tuples in Typescript
+
+A tuple is an array-like structure where each element represents some property of a record. 
+Other then representing rows of a CSV file, tuples are not that useful in typescript because we loose a lot of information about the data we want to represent.
+
+Take the following artificial example.
+
+```javascript
+const carSpecs: [number,  number] = [400, 3354];
+```
+
+How do we know what each of the above numbers represent? We do not. We have lost this information and it must be implicitly known by the developers. On the other hand, if we represent the same structure as an object, we preserve this information.
+
+```javascript
+const carSpecs = {
+    horsepower: 400,
+    weight: 3354
+}
+```
+
+#### Interfaces in Typescript
+
+An interface is a new type, describing the property names and value types of an object.
