@@ -230,3 +230,73 @@ const carSpecs = {
 #### Interfaces in Typescript
 
 An interface is a new type, describing the property names and value types of an object.
+
+#### Classes in Typescript
+
+Loosely speaking, a class is a blueprint for creating an object with some fields (values) and methods (functions) to represent a 'thing'.
+
+The modifiers of a class are pretty much the same as they are in Java.
+
+- **public:** Can be called any where, any time,
+- **private:** Can only be called by other methods in the same class,
+- **protected:** Can be called by other methods in the same class, or by other methods in child classes.
+
+Interfaces and classes are the main tools in order to reuse code in Typescript.
+
+#### Design Patterns with Typescript
+
+We are going to implement a basic web application that randomly generates a user and a company and display their locations on a map in the browser.
+
+We are going to use `parcel`. We install it as follows.
+
+```bash
+npm install -g parcel-bundler
+```
+
+We generate a new project folder named `maps`.
+
+```bash
+mkdir maps
+```
+
+Parcel will recieve the `index.html` file and will parse typescript files referenced inside `index.html` to Javascript and replace them inside the `<script>` tags.
+
+This is done by the following command.
+
+```bash
+parcel index.html
+```
+
+By convention, we start a ts file whose purpose it is to export a class by a capital letter. A file whose main purpose it is to import and to initialize classes will start with a lower case letter (i.e. `index.ts`).
+
+Some notes on the use of JS libraries in typescript. Typescript uses so called type definitions files as an adapter layer between typescript code and a JS library. These files include and export all the needed types of the JS library. They are either installed automatically with the JS library or need to be installed manually.
+
+Most of the types are located in a project called `Definitely Typed` and it uses the following naming scheme:
+
+> @types/{library-name}
+
+All these types can be installed as usual using `npm`.
+
+A quick note on default exports. A default export is an export from an module that uses the keyword `default` like the following example.
+
+```javascript
+export default 'red';
+```
+
+We can import it by not using curly braces as we do for named exports.
+
+```javascript
+import red from './whateverPath';
+```
+
+However, we can name the import however we like, i.e. the following is totally valid.
+
+```javascript
+import color from './whateverPath';
+```
+
+Notice that we do not recommend to use default exports at all since it makes it very difficult to refactor code in the future (i.e. if the import is renamed at several places and we want to change the export to a named export). Thus, we will not use default exports at all. This is actually also a convention for typescript.
+
+##### Global Variables in Typescript
+
+By adding script files directly to `index.html` like we did with google, we have added a global variable which Typescript is not aware of. In order to fix this problem, we need to add the Typescript definition scheme. For google this is called `@types/google.maps`. This will tell Typescript that there exists a global variable named `google`.

@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/pgrepds/typescript-playground#readme",
   "dependencies": {
+    "@faker-js/faker": "^7.1.0",
+    "@types/google.maps": "^3.49.2",
+    "@types/googlemaps": "^3.43.3",
     "axios": "^0.26.0"
   }
 }
