@@ -4,7 +4,7 @@
   "description": "The following repository contains code for exploring Typescript which I have created during a Udemy course, namely",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "preinstall": "cp hooks/pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit && echo 'Added pre-commit hook'"
   },
   "repository": {
     "type": "git",

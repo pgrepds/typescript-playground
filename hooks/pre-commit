@@ -1,0 +1,39 @@
+#!/bin/bash
+STASH="pre-commit-$(date +%s)"
+#git stash save -q --keep-index $STASH
+
+GOOGLE_MAPS_API="key=.+[A-Za-z]\""
+API_REGEXPS=( $GOOGLE_MAPS_API )
+
+matches=()
+filesToCheck=($(git diff --name-only --cached))
+
+for file in ${filesToCheck[@]}
+do
+    for regex in ${API_REGEXPS[@]}
+    do
+        match=$(grep --with-filename -r -n -E $regex $file | tr -d [:space:])
+
+        if [ ! -z $match ]
+        then
+            matches+=($match)
+            git reset HEAD $file
+        fi
+    done
+done
+
+if [ ${#matches[@]} -eq 0 ];
+then
+    STASHES=$(git stash list)
+    if [[ $STASHES == "$STASH" ]]; then
+      git stash drop
+    fi
+    exit 0
+else
+    echo "PRE-COMMIT Hook failed! Found potential API key matches!"
+    for match in ${matches[@]}
+    do
+        echo "${match}"
+    done
+    exit 1
+fi
