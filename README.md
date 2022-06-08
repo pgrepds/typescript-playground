@@ -300,3 +300,54 @@ Notice that we do not recommend to use default exports at all since it makes it 
 ##### Global Variables in Typescript
 
 By adding script files directly to `index.html` like we did with google, we have added a global variable which Typescript is not aware of. In order to fix this problem, we need to add the Typescript definition scheme. For google this is called `@types/google.maps`. This will tell Typescript that there exists a global variable named `google`.
+
+### Interfaces in Typescript
+
+We note that it is not necessary for a class in Typescript to implement an interface in order to satisfy it. Typescript will check behind the scenes if the given object contains the properties the interface demands. Here is a quick example.
+
+```javascript
+interface Foo {
+    a: number,
+    b: number,
+}
+
+class A {
+    a: number;
+    b: number;
+    c: string;
+    constructor(a: number, b: number, c: string) { }
+}
+
+class B {
+    a: number;
+    b: number;
+    c: string;
+    d: string;
+    constructor(a: number, b: number, c: string, d: string) { }
+}
+
+function doX(param: Foo) {
+    console.log(param.a, param.b)
+}
+
+const a = new A(1, 2, "Hello");
+const b = new B(3, 4, "World!", "X");
+
+// this will work, since TS will check if both a and b satisfy the interface Foo
+// there is no need to implicitly implement it as in Java for example.
+doX(a);
+doX(b);
+```
+
+However, it is usually advised to implicitly implement the interface that we want to use in order to help typescript to spot possible implementation errors directly in the classes in which they occur.
+
+This is done the same way as in Java.
+
+```javascript
+class A implements Foo {
+    a: number;
+    b: number;
+    c: string;
+    constructor(a: number, b: number, c: string) { }
+}
+```
